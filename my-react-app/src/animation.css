@@ -1,0 +1,15 @@
+
+/* Falling word animation */
+@keyframes fallWord {
+    0% {
+      transform: translateY(0); /* Start at the top */
+    }
+    100% {
+      transform: translateY(100vh); /* Fall to the bottom of the screen */
+    }
+  }
+  
+  /* Apply the falling animation when the word is falling */
+  .falling {
+    animation: fallWord 10s linear forwards;
+  }
