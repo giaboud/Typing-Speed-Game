@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
-import './animation.css';
 import { generateRandomWord } from './RandomWords';
+
+const BOTTOM_BUFFER = 60;
 
 export default function GameArea({lives, score, setLives, setScore}) {
 
@@ -12,7 +13,6 @@ export default function GameArea({lives, score, setLives, setScore}) {
 
   const [falling, setFalling] = useState(false); // Whether the word is falling
   const [fallPosition, setFallPosition] = useState(0); // Track vertical position of the word
-  const [leftPosition, setLeftPosition] = useState(0); // Track horizontal position of the word
 
   // falling animation
    // Handle falling word (fall every second if not typing)
@@ -20,23 +20,25 @@ export default function GameArea({lives, score, setLives, setScore}) {
   useEffect(() => {
     if (falling) {
       const interval = setInterval(() => {
-        setFallPosition((prev) => prev + 1); // Increase fall position every 100ms
+        setFallPosition((prev) => prev + 4); 
       }, 100);
 
       return () => clearInterval(interval); // Clean up interval when falling stops
     }
   }, [falling]);
 
-  // move word horizontally
+  // detect when the word reaches the bottom of the screen, reset the word and lose a life
   useEffect(() => {
-    if (charIndex < randomWord.length) {
-      const interval = setInterval(() => {
-        setLeftPosition((prev) => prev + 1); // Move word to the right by 1 pixel every 100ms
-      }, 100);
-
-      return () => clearInterval(interval); // Stop moving the word when the word is fully typed
+    if (lives == 0) return;
+    const absoluteTop = window.innerHeight / 2 + fallPosition; // word's real position from the top of the screen since starting offset
+    if (absoluteTop >= window.innerHeight - BOTTOM_BUFFER) {
+      setFalling(false);
+      setLives((prevLives) => Math.max(0, prevLives - 1));
+      setInputValue('');
+      setCharIndex(0);
+      setRandomWord(generateRandomWord());
     }
-  }, [charIndex]);
+  }, [fallPosition]);
 
 
 
@@ -54,7 +56,7 @@ export default function GameArea({lives, score, setLives, setScore}) {
     if(inputRef.current) inputRef.current.focus();
     setFalling(true); // Start falling when new word is generated
    setFallPosition(0); // Reset fall position when new word is generated
-    setLeftPosition(0); // Start from the left side of the screen
+
   }, [randomWord]);
 
   const handleKeyDown = (event) => {
@@ -84,7 +86,7 @@ export default function GameArea({lives, score, setLives, setScore}) {
             
             // Stop falling and rise slightly
         setFalling(false);
-        setFallPosition((prev) => Math.max(prev - 10, 0)); // Rise a little (e.g., -10px)
+        setFallPosition((prev) => Math.max(prev - 5, 0)); // Rise a little (e.g., -10px)
 
         // After rising, start falling again
         setTimeout(() => setFalling(true), 500);
@@ -113,11 +115,12 @@ export default function GameArea({lives, score, setLives, setScore}) {
 
   return (
     <div className = "word-container">
-      <div   className={`word-display ${falling ? 'falling' : ''}`} // Apply falling animation if word is falling
+      <div   className={`word-display`} 
         style={{
-          top: `${fallPosition}px`,
-          left: `${leftPosition}px`, // Move word horizontally
-        }} // Apply falling animation if word is falling
+            top: '50%',
+            left: '50%',
+            transform: `translate(-50%, calc(-50% + ${fallPosition}px))`,
+        }} 
       >
         {randomWord.split('').map((char, index) => ( // split character
           <span
@@ -137,10 +140,6 @@ export default function GameArea({lives, score, setLives, setScore}) {
         onKeyDown={handleKeyDown}
         onChange = {(event) => setInputValue(event.target.value)}
       />
-      {/* <div className="score-lives">
-        <p>Score: {score}</p>
-        <p>Lives: {lives}</p>
-      </div> */}
     </div>
   );
 }

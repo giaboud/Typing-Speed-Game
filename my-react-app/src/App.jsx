@@ -8,6 +8,7 @@ function App() {
   const [elapsedTime, setElapsedTime] = useState(0);
   const [lives, setLives] = useState(3);  
   const [score, setScore] = useState(0);
+  const [gameKey, setGameKey] = useState(0); // key to force re-render of GameArea component
 
   // let letter = 0; // tracks the number of correct letters
 
@@ -26,6 +27,7 @@ function App() {
         setElapsedTime(0);
         setLives(3);
         setScore(0);
+        setGameKey(prevKey => prevKey + 1); // increment the key to force re-render of GameArea
       }
 
   return (
