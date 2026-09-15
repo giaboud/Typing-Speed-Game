@@ -10,7 +10,7 @@ const DIFFICULTY_SETTINGS = {
 
 export default function GameArea({lives, score, setLives, setScore, difficulty}) {
 
-  const { fallSpeed, moveSpeed } = DIFFICULTY_SETTINGS[difficulty] || DIFFICULTY_SETTINGS.easy;
+  const { fallSpeed } = DIFFICULTY_SETTINGS[difficulty] || DIFFICULTY_SETTINGS.easy;
 
   const [inputValue, setInputValue] = useState('');
   const [charIndex, setCharIndex] = useState(0);
@@ -34,14 +34,6 @@ export default function GameArea({lives, score, setLives, setScore, difficulty})
     }
   }, [falling, fallSpeed]);
 
-  useEffect(() => {
-    if (charIndex < randomWord.length) { 
-      const interval = setInterval(() => {
-        setLeftPosition((prev) => prev + 1);
-      }, moveSpeed);
-      return () => clearInterval(interval);
-    }
-  }, [charIndex, moveSpeed]);
 
   // detect when the word reaches the bottom of the screen, reset the word and lose a life
   useEffect(() => {
@@ -52,7 +44,7 @@ export default function GameArea({lives, score, setLives, setScore, difficulty})
       setLives((prevLives) => Math.max(0, prevLives - 1));
       setInputValue('');
       setCharIndex(0);
-      setRandomWord(generateRandomWord());
+      setRandomWord(generateRandomWord(difficulty));
     }
   }, [fallPosition]);
 
@@ -60,7 +52,7 @@ export default function GameArea({lives, score, setLives, setScore, difficulty})
 
   // generate ran word
  useEffect(() => {
-    setRandomWord(generateRandomWord(difficulty));
+    setRandomWord(generateRandomWord(difficulty, randomWord)); 
   }, [difficulty]);
 
 
@@ -72,7 +64,8 @@ export default function GameArea({lives, score, setLives, setScore, difficulty})
     setCorrectWrong(Array(randomWord.length).fill('')); // reset styles when new word changes
     if(inputRef.current) inputRef.current.focus();
     setFalling(true); // Start falling when new word is generated
-   setFallPosition(0); // Reset fall position when new word is generated
+    setFallPosition(0); // Reset fall position when new word is generated
+
 
   }, [randomWord]);
 
@@ -122,7 +115,7 @@ export default function GameArea({lives, score, setLives, setScore, difficulty})
       setInputValue('');
         setScore(score + 1);
         setCharIndex(0);
-        setRandomWord(generateRandomWord(difficulty));
+        setRandomWord(generateRandomWord(difficulty, randomWord));
         setFalling(true);
         
     } else{
@@ -134,7 +127,10 @@ export default function GameArea({lives, score, setLives, setScore, difficulty})
         <div className="word-container">
       <div
         className={`word-display ${falling ? 'falling' : ''}`}
-        style={{ top: `${fallPosition}px`, left: `${leftPosition}px` }}
+        style={{ top: '50%',
+            left: '50%',
+            transform: `translate(-50%, calc(-50% + ${fallPosition}px))`,}}
+
       >
         {randomWord.split('').map((char, index) => (
           <span
