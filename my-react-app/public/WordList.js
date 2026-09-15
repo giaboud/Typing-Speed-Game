@@ -1,16 +1,28 @@
-const WordList = [
-    "apple", "mountain", "guitar", "sky", "ocean", "forest", "rainbow", "cloud", "desert", "river",
-    "elephant", "keyboard", "sunshine", "mirror", "adventure", "village", "mountain", "blossom", "piano", "lamp",
-    "horizon", "velocity", "journey", "candle", "lighthouse", "whisper", "space", "sunset", "mystery", "chocolate",
-    "butterfly", "paper", "journey", "television", "bicycle", "wizard", "puzzle", "autumn", "snowflake", "flame",
-    "tiger", "apple", "mystic", "clouds", "tree", "starlight", "freedom", "winter", "imagination", "whale",
-    "music", "piano", "serenity", "harmony", "moonlight", "giraffe", "friendship", "mountain", "cosmos", "painting",
-    "butterfly", "calendar", "dandelion", "sailboat", "sunflower", "universe", "shadow", "sunshine", "coast", "nature",
-    "tunnel", "peacock", "fountain", "rain", "heart", "canyon", "whale", "cupcake", "origami", "serenity",
-    "magic", "whistle", "sunbeam", "cliff", "story", "island", "rocket", "vibrant", "feather", "goddess",
-    "whisper", "starfish", "lighthouse", "skydiving", "treasure", "paradise", "balance", "harmony", "journey", "sparkle",
-    "cloud", "lemon", "puzzle", "origami", "flourish", "moon", "seashell", "giraffe", "telescope", "flame",
-    "butterfly", "adventure", "treasure", "wish", "serenity", "treasure", "explore", "symphony", "dream", "echo"
-];
+const WordList = {
+    easy: ["cat", "dog", "sun", "sky", "run", "map", "tea", "box", "bee", "fox",
+  "ice", "leg", "arm", "hat", "pen", "cup", "key", "jam", "owl", "van",
+  "lamp", "tree", "book", "star", "moon", "fish", "bird", "cake", "door", "fire",
+  "gold", "hand", "king", "leaf", "milk", "nest", "pond", "rain", "rock", "snow",
+  "wind", "song", "lake", "gate", "coin", "desk", "farm", "frog", "gift", "wolf"],
 
-export { WordList };
+    medium: ["elephant", "mountain", "keyboard", "sunshine", "mirror", "village", "blossom", "horizon",
+  "journey", "candle", "whisper", "sunset", "mystery", "chocolate", "bicycle", "wizard",
+  "puzzle", "autumn", "snowflake", "flame", "giraffe", "harmony", "painting", "calendar",
+  "dandelion", "sailboat", "sunflower", "shadow", "fountain", "canyon", "cupcake", "origami",
+  "sunbeam", "island", "rocket", "feather", "starfish", "telescope", "seashell", "explore",
+  "trumpet", "volcano", "compass", "lantern", "meadow", "thunder", "blanket", "pumpkin",
+  "kingdom", "diamond"],
+
+  hard: ["rhythm", "queue", "xylophone", "knapsack", "chrysalis", "psychology", "handkerchief",
+  "quadrilateral", "onomatopoeia", "extraordinary", "bureaucracy", "misspelled", "juxtaposition",
+  "conscientious", "worcestershire", "entrepreneurship", "chiaroscuro", "syzygy", "rhythmically",
+  "sasquatch", "quixotic", "gazpacho", "labyrinthine", "millennium", "questionnaire",
+  "unprecedented", "nostalgically", "vulnerability", "kaleidoscope", "phenomenon",
+  "subterranean", "circumnavigate", "idiosyncrasy", "surreptitiously", "disproportionate",
+  "pharmaceutical", "archaeologist", "connoisseur", "hypochondriac", "bibliography",
+  "claustrophobia", "pronunciation", "flabbergasted", "juggernaut", "zeitgeist",
+  "schadenfreude", "pneumonia", "sixth", "twelfths", "strengths"]
+
+};
+
+export { WordList }; 
